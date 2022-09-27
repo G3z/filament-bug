@@ -4,11 +4,15 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\Layout;
 
 class UserResource extends Resource
 {
@@ -29,7 +33,23 @@ class UserResource extends Resource
             ->columns([
                 TextColumn::make('name'),
             ])
-            ->filters([])
+            ->filters([
+                Filter::make('name')->form([
+                    TextInput::make('name'),
+                ]),
+                Filter::make('advanced')
+                ->columnSpan(5)
+                ->form([
+                    Section::make('advanced')
+                    ->columnSpan(5)
+                    ->collapsed()
+                    ->compact()
+                    ->schema([
+                        TextInput::make('name'),
+                        TextInput::make('name'),
+                    ]),
+                ]),
+            ], Layout::AboveContent)
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
