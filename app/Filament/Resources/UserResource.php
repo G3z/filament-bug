@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
 use Filament\Forms\Components\ColorPicker;
+use Filament\Forms\Components\Repeater;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -21,7 +22,9 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                ColorPicker::make('color'),
+                Repeater::make('color')->schema([
+                    ColorPicker::make('color'),
+                ]),
             ]);
     }
 
@@ -29,31 +32,23 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-            TextColumn::make('name'),
-            TextColumn::make('color'),
+                TextColumn::make('name'),
             ])
             ->filters([
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-        ];
-    }
-
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
+            'index' => Pages\ManageUsers::route('/'),
         ];
     }
 }
