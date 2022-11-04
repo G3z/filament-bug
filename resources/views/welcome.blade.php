@@ -19,7 +19,7 @@
 </head>
 
 <body class="antialiased">
-    Hello from laravel
+    <livewire:test-form />
     @livewire('notifications')
 </body>
 
